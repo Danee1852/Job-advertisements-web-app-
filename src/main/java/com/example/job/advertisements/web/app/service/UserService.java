@@ -27,16 +27,7 @@ public class UserService {
 		}
 		throw new UserNotFoundException("Could not find any user with ID: " + id);
 
-		/*
-		 * User currentUser = repository.findById(id);
-		 * 
-		 * user.setName(currentUser.getName()); user.setEmail(currentUser.getEmail());
-		 * user.setPassword(currentUser.getPassword());
-		 * user.setQualification(currentUser.getQualification());
-		 * user.setRole(currentUser.getRole());
-		 * 
-		 * return repository.save(currentUser);
-		 */
+	
 	}
 
 	public void delete(Long id) throws UserNotFoundException {
