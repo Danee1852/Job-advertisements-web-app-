@@ -1,4 +1,5 @@
 package com.example.job.advertisements.web.app.service;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,26 +10,23 @@ import com.example.job.advertisements.web.app.repository.UserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repository;
-	
-	
+
 	public User create(User user) {
-	
-		
 		return repository.save(user);
 	}
-	
+
 	public User update(User user, long id) throws UserNotFoundException {
-		
-		Optional<User> result= repository.findById(id);
-		
-		if(result.isPresent()) {
+
+		Optional<User> result = repository.findById(id);
+
+		if (result.isPresent()) {
 			return result.get();
 		}
-		throw new UserNotFoundException("Could not find any user with ID: "+id);
-		
+		throw new UserNotFoundException("Could not find any user with ID: " + id);
+
 		/*
 		 * User currentUser = repository.findById(id);
 		 * 
@@ -40,18 +38,22 @@ public class UserService {
 		 * return repository.save(currentUser);
 		 */
 	}
-	
-	public void delete (Long id) {
-	
+
+	public void delete(Long id) throws UserNotFoundException {
+		
+		Long count = repository.countById(id);
+		if(count == null || count ==0) {
+			throw new UserNotFoundException("Could not find any user with ID: "+id);
+		}
+		
 		repository.deleteById(id);
 	}
 
-	// new function
 	public void save(User user) {
 		repository.save(user);
-		
+
 	}
-	
+
 	// Need to add login method
 
 }
