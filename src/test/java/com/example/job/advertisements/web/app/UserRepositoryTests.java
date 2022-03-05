@@ -1,5 +1,7 @@
 package com.example.job.advertisements.web.app;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class UserRepositoryTests {
 	private UserRepository repository;
 	
 	@Test
-	public void testaddNewUser() {
+	public void testAddNewUser() {
 		
 		User user = new User();
 		
@@ -34,6 +36,16 @@ public class UserRepositoryTests {
 		Assertions.assertThat(savedUser).isNotNull();
 		Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
 		
+		
+	}
+	@Test
+	public void testDeleteUser() {
+		
+		long userId=10;
+		
+		Optional<User> optionalUser= repository.findById(userId);
+		
+		Assertions.assertThat(optionalUser).isNotPresent();
 		
 	}
 }
