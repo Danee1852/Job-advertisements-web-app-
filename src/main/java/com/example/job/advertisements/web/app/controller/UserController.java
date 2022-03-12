@@ -39,4 +39,9 @@ public class UserController {
 		return " ";
 	}
 	
+	@GetMapping("/home")
+	public String homePage() {
+		return "index";
+	}
+	
 }
