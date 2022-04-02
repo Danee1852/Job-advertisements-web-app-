@@ -4,6 +4,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.job.advertisements.web.app.DTO.UserRegistrationDto;
 import com.example.job.advertisements.web.app.exceptionHandler.UserNotFoundException;
 import com.example.job.advertisements.web.app.model.User;
 import com.example.job.advertisements.web.app.repository.UserRepository;
@@ -14,7 +15,11 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 
-	public User create(User user) {
+	public User create(UserRegistrationDto registrationDto) {
+
+		User user = new User(registrationDto.getName(),
+				registrationDto.getEmail(),
+				registrationDto.getPassword());
 		return repository.save(user);
 	}
 

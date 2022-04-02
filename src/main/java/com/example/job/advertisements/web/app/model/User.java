@@ -41,6 +41,14 @@ public class User {
 		this.qualification = qualification;
 		this.role = role;
 	}
+	
+
+	public User(String name, String email, String password) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
 
 	public Long getId() {
 		return id;

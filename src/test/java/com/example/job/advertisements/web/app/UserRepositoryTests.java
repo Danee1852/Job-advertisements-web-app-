@@ -25,8 +25,8 @@ public class UserRepositoryTests {
 		
 		User user = new User();
 		
-		user.setName("Pawel");
-		user.setEmail("pawello1852@gmail.com");
+		user.setName("Danee");
+		user.setEmail("danee123@gmail.com");
 		user.setPassword("qwerty1234");
 		user.setQualification("Java Developer");
 		user.setRole("user");
