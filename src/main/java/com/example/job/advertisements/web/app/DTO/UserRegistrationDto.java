@@ -10,6 +10,7 @@ public class UserRegistrationDto {
 
 	private String password;
 	
+	
 
 	
 	
@@ -18,11 +19,16 @@ public class UserRegistrationDto {
 		this.name = name;
 		this.email = email;
 		this.password = password;
+
 	}
 
 	public UserRegistrationDto() {
 		
 	}
+	
+	
+
+	
 
 	public String getName() {
 		return name;

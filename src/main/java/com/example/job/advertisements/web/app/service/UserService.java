@@ -1,5 +1,7 @@
 package com.example.job.advertisements.web.app.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +17,10 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 
+	
 	public User create(UserRegistrationDto registrationDto) {
 
-		User user = new User(registrationDto.getName(),
-				registrationDto.getEmail(),
-				registrationDto.getPassword());
+		User user = new User(registrationDto.getName(), registrationDto.getEmail(), registrationDto.getPassword());
 		return repository.save(user);
 	}
 
@@ -32,16 +33,15 @@ public class UserService {
 		}
 		throw new UserNotFoundException("Could not find any user with ID: " + id);
 
-	
 	}
 
 	public void delete(Long id) throws UserNotFoundException {
-		
+
 		Long count = repository.countById(id);
-		if(count == null || count ==0) {
-			throw new UserNotFoundException("Could not find any user with ID: "+id);
+		if (count == null || count == 0) {
+			throw new UserNotFoundException("Could not find any user with ID: " + id);
 		}
-		
+
 		repository.deleteById(id);
 	}
 

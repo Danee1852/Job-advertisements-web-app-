@@ -1,7 +1,11 @@
 package com.example.job.advertisements.web.app.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,17 +21,22 @@ import com.example.job.advertisements.web.app.service.UserService;
 @Controller
 public class UserController {
 	
+	
 	@Autowired
 	private UserService service;
 	
-	//new function
+	private List<String> professions = new ArrayList<>(
+			List.of("Java Developer", "Frontend Developer", "Tester", "Consultant", "DevOps", "Administrator"));
+
+	
 	@PostMapping("/registration")
 	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
 		service.create(registrationDto);
 		return "redirect:/registration?success";
 	}
 	@GetMapping("/registration")
-	public String showRegistrationForm() {
+	public String showRegistrationForm(Model model) {
+		model.addAttribute("professions",professions);
 		return "registration";
 	}
 	
