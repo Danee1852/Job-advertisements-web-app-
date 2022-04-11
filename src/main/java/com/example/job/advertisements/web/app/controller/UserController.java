@@ -25,18 +25,13 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-	private List<String> professions = new ArrayList<>(
-			List.of("Java Developer", "Frontend Developer", "Tester", "Consultant", "DevOps", "Administrator"));
-
-	
 	@PostMapping("/registration")
 	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
 		service.create(registrationDto);
 		return "redirect:/registration?success";
 	}
 	@GetMapping("/registration")
-	public String showRegistrationForm(Model model) {
-		model.addAttribute("professions",professions);
+	public String showRegistrationForm() {
 		return "registration";
 	}
 	

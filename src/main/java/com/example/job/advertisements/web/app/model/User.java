@@ -23,39 +23,20 @@ public class User {
 	@Transient
 	private String password;
 	
-	@Column(name = "qualification")
-	private String qualification;
-	
-	@Column(name = "role")
-	private String role;
 
 	public User() {
 		
 	}
 
-	public User(String name, String email, String password, String qualification, String role) {
+	public User(String name, String email, String password) {
 	
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.qualification = qualification;
-		this.role = role;
+	
 	}
 	
 
-	public User(String name, String email, String password) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.password = password;
-	}
-	public User(String name, String email, String password, String qualification) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.qualification = qualification;
-	}
 
 	public Long getId() {
 		return id;
@@ -84,22 +65,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getQualification() {
-		return qualification;
-	}
-
-	public void setQualification(String qualification) {
-		this.qualification = qualification;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 	
