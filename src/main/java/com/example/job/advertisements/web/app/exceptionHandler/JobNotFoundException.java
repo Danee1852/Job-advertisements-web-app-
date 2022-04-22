@@ -1,20 +1,15 @@
 package com.example.job.advertisements.web.app.exceptionHandler;
 
-public class UserNotFoundException extends Exception {
+public class JobNotFoundException extends Exception {
 
 	
 	private static final long serialVersionUID = 1L;
 	
-	public UserNotFoundException() {
+	public JobNotFoundException() {
 		super();
-	
 	}
 
-	public UserNotFoundException(String message) {
+	public JobNotFoundException(String message) {
 		super(message);
-	
 	}
-	
-	
-
 }

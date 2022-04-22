@@ -25,6 +25,11 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	@GetMapping("/newFile")
+	public String showTestForm() {
+		return "NewFile";
+	}
+	
 	@PostMapping("/registration")
 	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
 		service.create(registrationDto);
