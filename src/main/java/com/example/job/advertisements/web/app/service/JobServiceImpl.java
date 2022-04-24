@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.job.advertisements.web.app.exceptionHandler.JobNotFoundException;
 import com.example.job.advertisements.web.app.model.Job;
 import com.example.job.advertisements.web.app.repository.JobRepository;
 
+@Service
 public class JobServiceImpl implements JobService {
 
 	@Autowired

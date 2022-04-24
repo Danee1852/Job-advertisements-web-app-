@@ -6,6 +6,7 @@ import com.example.job.advertisements.web.app.exceptionHandler.JobNotFoundExcept
 import com.example.job.advertisements.web.app.model.Job;
 
 public interface JobService {
+	
 
 	public Job saveJob(Job job);
 
