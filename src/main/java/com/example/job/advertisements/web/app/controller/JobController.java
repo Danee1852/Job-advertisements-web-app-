@@ -36,6 +36,32 @@ public class JobController {
 		
 	}
 	
+static List<String> professionsList = null;
+	
+	static {
+		professionsList = new ArrayList<>();
+		professionsList.add("Java Developer");
+		professionsList.add("JS Develper");
+		professionsList.add("Python Developer");
+		professionsList.add("Kotlin Developer");
+		professionsList.add("GO Developer");
+		professionsList.add("Manual Tester");
+		professionsList.add("Consultant");
+
+		
+	}
+	
+static List<String> statusList = null;
+	
+	static {
+		statusList = new ArrayList<>();
+		statusList.add("Enabled");
+		statusList.add("Disabled");
+
+	}
+	
+	
+	
 	@GetMapping("/")
 	public String showHomePage() {
 		
@@ -47,6 +73,8 @@ public class JobController {
 	@GetMapping("/add")
 	public String showAddForm(Model model) {
 		model.addAttribute("locationsList", locationsList);
+		model.addAttribute("professionsList", professionsList);
+		model.addAttribute("statusList",statusList);
 		return "addForm";
 	}
 
