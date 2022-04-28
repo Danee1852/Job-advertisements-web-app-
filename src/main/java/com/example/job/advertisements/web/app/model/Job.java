@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+
 
 @Entity
 public class Job {
@@ -13,18 +17,25 @@ public class Job {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@NotEmpty
+	@Size(max=20)
 	@Column(name = "title")
 	private String title;
 	
+	@NotEmpty
+	@Size(max=200)
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "category")
-	private String category;
+	@NotEmpty
+	@Column(name = "profession")
+	private String profession;
 	
+	@NotEmpty
 	@Column(name = "status")
 	private String status;
 	
+	@NotEmpty
 	@Column(name = "location")
 	private String location;
 	
@@ -36,11 +47,11 @@ public class Job {
 	}
 	
 
-	public Job(String title, String description, String category, String status, String location, String publishDate) {
+	public Job(String title, String description, String profession, String status, String location, String publishDate) {
 		
 		this.title = title;
 		this.description = description;
-		this.category = category;
+		this.profession = profession;
 		this.status = status;
 		this.location = location;
 		this.publishDate = publishDate;
@@ -69,12 +80,12 @@ public class Job {
 		this.description = description;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getProfession() {
+		return profession;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setProfession(String profession) {
+		this.profession = profession;
 	}
 
 	public String getStatus() {

@@ -42,13 +42,13 @@
 								<label for="description"><b>Description</b></label>
 							</div>
 							<div class="col-4">
-								<textarea class="form-control" rows="3"></textarea>
+								<textarea class="form-control" rows="3" name="description"></textarea>
 							</div>
 						</div>
 						<br />
 						<div class="row">
 							<div class="col-2">
-								<label for="category"><b>Category</b></label>
+								<label for="profession"><b>Profession</b></label>
 							</div>
 							<select name="profession">
 								<option th:each="profession : ${professionsList}"
@@ -75,7 +75,7 @@
 							Save Advertisement <i class="fa fa-plus-square"
 								aria-hidden="true"></i>
 						</button>
-						<a th:href="@{/invoice/getAllJobs}" class="btn btn-primary">Show
+						<a th:href="@{/job/getAllJobs}" class="btn btn-primary">Show
 							All Advertisements</a>
 					</form>
 				</div>
