@@ -60,6 +60,14 @@ public class JobController {
 		statusList.add("Disabled");
 
 	}
+	
+	private void initModel(Model model)
+	{
+		model.addAttribute("locationsList", locationsList);
+		model.addAttribute("professionsList", professionsList);
+		model.addAttribute("statusList", statusList);
+	}
+
 
 	@GetMapping("/")
 	public String showHomePage() {
@@ -70,31 +78,28 @@ public class JobController {
 	@GetMapping("/add")
 	public String showAddForm(Job job, Model model) {
 
-		model.addAttribute("locationsList", locationsList);
-		model.addAttribute("professionsList", professionsList);
-		model.addAttribute("statusList", statusList);
+		initModel(model);
 		return "addForm";
 	}
 
 	@PostMapping("/add")
 	public String saveJob(@ModelAttribute (name="job") @Valid Job job, BindingResult br, Model model) {
-		service.saveJob(job);
-		Long id = service.saveJob(job).getId();
-		model.addAttribute("locationsList", locationsList);
-		model.addAttribute("professionsList", professionsList);
-		model.addAttribute("statusList", statusList);
-
+		
+		initModel(model);
 		if (br.hasErrors()) {
 			return "addForm";
 		} 
-			
+		   	Long id = service.saveJob(job).getId();
 			String message = "Advertisement with id : '" + id + "' is saved successfully !";
 			model.addAttribute("message", message);
+			service.saveJob(job);
 
 			return "addForm";
 		
 
 	}
+	
+	
 
 	@GetMapping("/getAllJobs")
 	public String getAllJobs(@RequestParam(value = "message", required = false) String message, Model model) {

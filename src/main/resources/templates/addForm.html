@@ -8,7 +8,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 </head>
 <body>
-	<div class="col-5">
+	<div class="col-md-10">
 		<div class="container">
 
 			<div class="card">
@@ -22,7 +22,7 @@
 							<div class="col-2">
 								<label for="title"><b>Title</b></label>
 							</div>
-							<div class="col-4">
+							<div class="col-6">
 								<input type="text" class="form-control" id="title"
 									placeholder="Enter title" name="title" th:field="*{title}"><br />
 								<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
@@ -34,20 +34,20 @@
 							<div class="col-2">
 								<label for="location"><b>Location</b></label>
 							</div>
-							<select id="location" name="location" > 
-								<option value="" disabled selected>Select your location</option>
+							<select id="location" name="location">
+								<option value="" disabled selected>Select location</option>
 								<option th:each="location : ${locationsList}"
 									th:text="${location}" />
 							</select>
-							
-							
+
+
 						</div>
 						<br />
 						<div class="row">
 							<div class="col-2">
 								<label for="description"><b>Description</b></label>
 							</div>
-							<div class="col-4">
+							<div class="col-6">
 								<textarea class="form-control" rows="3" id="description"
 									placeholder="Enter description" name="description"
 									th:field="*{description}"></textarea>
@@ -62,6 +62,7 @@
 								<label for="profession"><b>Profession</b></label>
 							</div>
 							<select name="profession">
+								<option value="" disabled selected>Select profession</option>
 								<option th:each="profession : ${professionsList}"
 									th:text="${profession}" />
 
@@ -74,6 +75,7 @@
 								<label for="status"><b>Status</b></label>
 							</div>
 							<select name="status">
+								<option value="" disabled selected>Select status</option>
 								<option th:each="status : ${statusList}" th:text="${status}" />
 
 							</select>

@@ -1,12 +1,19 @@
 package com.example.job.advertisements.web.app.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 
 @Entity
 public class Job {
@@ -37,8 +44,10 @@ public class Job {
 	@Column(name = "location")
 	private String location;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "publishDate")
-	private String publishDate;
+	private Date publishDate;
 
 	public Job() {
 
@@ -46,7 +55,7 @@ public class Job {
 	// ,
 
 	public Job(String title, String description, String location, String profession, String status,
-			String publishDate) {
+			Date publishDate) {
 
 		this.title = title;
 		this.description = description;
@@ -100,11 +109,11 @@ public class Job {
 		this.location = location;
 	}
 
-	public String getPublishDate() {
+	public Date getPublishDate() {
 		return publishDate;
 	}
 
-	public void setPublishDate(String publishDate) {
+	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
 

@@ -41,23 +41,28 @@
 				<h3>Job Offers</h3>
 			</div>
 
-			<table class="table table-hover">
+			<table class="table table-hover table-bordered ">
 				<tr class="bg-dark text-white">
-					<th>ID</th>
-					<th>Name</th>
+					<th>Id</th>
+					<th>Title</th>
 					<th>Location</th>
 					<th>Description</th>
 					<th>Category</th>
 					<th>Publish Date</th>
+					<th>Status</th>
 					<th>Edit/Delete</th>
 				</tr>
-				<!-- <tr th:each="ob:${list}">
+				<tr th:each="ob:${list}">
 						<td th:text=${ob.id}></td>
-						<td th:text=${ob.name}></td>
+						<td th:text=${ob.title}></td>
 						<td th:text=${ob.location}></td>
+						<td th:text=${ob.description}></td>
+						<td th:text=${ob.profession}></td>
+						<td th:text=${ob.publishDate}></td>
+						<td th:text=${ob.status}></td>
 						<td><a th:href="@{/job/delete(id=${ob.id})}" class= "btn btn-danger">DELETE <i class="fa fa-trash-o" aria-hidden="true"></i></a> |
 						    <a th:href="@{/job/edit(id=${ob.id})}" class="btn btn-warning">EDIT <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-					</tr> -->
+					</tr>
 			</table>
 			<a th:href="@{/job/add}" class="btn btn-success ">Add
 				Job <i class="fa fa-plus-square" aria-hidden="true"></i>
