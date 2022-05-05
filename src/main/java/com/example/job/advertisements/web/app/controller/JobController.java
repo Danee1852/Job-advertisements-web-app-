@@ -27,20 +27,19 @@ public class JobController {
 	@Autowired
 	private JobService service;
 
-	
 	static List<String> locationsList = null;
-	
+
 	static {
 		locationsList = new ArrayList<>();
 		locationsList.add("Warsaw");
 		locationsList.add("Poznan");
 		locationsList.add("Wroclaw");
 		locationsList.add("Krakow");
-		
+
 	}
-	
-static List<String> professionsList = null;
-	
+
+	static List<String> professionsList = null;
+
 	static {
 		professionsList = new ArrayList<>();
 		professionsList.add("Java Developer");
@@ -51,49 +50,50 @@ static List<String> professionsList = null;
 		professionsList.add("Manual Tester");
 		professionsList.add("Consultant");
 
-		
 	}
-	
-static List<String> statusList = null;
-	
+
+	static List<String> statusList = null;
+
 	static {
 		statusList = new ArrayList<>();
 		statusList.add("Enabled");
 		statusList.add("Disabled");
 
 	}
-	
-	
-	
+
 	@GetMapping("/")
 	public String showHomePage() {
-		
+
 		return "index";
 	}
-	
-	
 
 	@GetMapping("/add")
-	public String showAddForm(Model model) {
+	public String showAddForm(Job job, Model model) {
+
 		model.addAttribute("locationsList", locationsList);
 		model.addAttribute("professionsList", professionsList);
-		model.addAttribute("statusList",statusList);
+		model.addAttribute("statusList", statusList);
 		return "addForm";
 	}
 
-	@PostMapping("/save")
-	public String saveJob(@Valid @ModelAttribute Job job, Model model, BindingResult br) {
+	@PostMapping("/add")
+	public String saveJob(@ModelAttribute (name="job") @Valid Job job, BindingResult br, Model model) {
 		service.saveJob(job);
 		Long id = service.saveJob(job).getId();
-		String message = "Advertisement with id : '" + id + "' is saved successfully !";
-		model.addAttribute("message", message);
-		
-		if(br.hasErrors()) {
-		return "addForm";
-		}else
-		return "redirect:/addForm?success";
-		
+		model.addAttribute("locationsList", locationsList);
+		model.addAttribute("professionsList", professionsList);
+		model.addAttribute("statusList", statusList);
+
+		if (br.hasErrors()) {
+			return "addForm";
+		} 
 			
+			String message = "Advertisement with id : '" + id + "' is saved successfully !";
+			model.addAttribute("message", message);
+
+			return "addForm";
+		
+
 	}
 
 	@GetMapping("/getAllJobs")
