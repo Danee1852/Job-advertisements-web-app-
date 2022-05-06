@@ -13,20 +13,20 @@
 
 			<div class="card">
 				<div class="card-header text-center text-black">
-					<h3>Add new advertisement</h3>
+					<h3>Edit advertisement</h3>
 				</div>
 				<div class="card-body">
-					<form action="/job/add" th:action="@{/job/add}" th:object="${job}"
-						method="POST" id="addForm">
+					<form action="/job/edit" th:action="@{/job/edit}" th:object="${job}"
+						method="POST" id="editJobPage">
 						<div class="row">
 							<div class="col-2">
 								<label for="title"><b>Title</b></label>
+								
 							</div>
 							<div class="col-6">
-								<input type="text" class="form-control" id="title"
-									placeholder="Enter title" name="title" th:field="*{title}"><br />
-								<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
-									class="alert alert-danger"></p>
+								<input type="text" class="form-control"
+									name="title" th:field="*{title}"><br />
+							
 							</div>
 						</div>
 						<br />
@@ -39,8 +39,7 @@
 								<option th:each="location : ${locationsList}"
 									th:text="${location}" />
 							</select> 
-								<p th:if="${#fields.hasErrors('location')}" th:errors="*{location}"
-									class="alert alert-danger"></p>
+							
 
 						</div>
 						<br />
@@ -49,12 +48,11 @@
 								<label for="description"><b>Description</b></label>
 							</div>
 							<div class="col-6">
-								<textarea class="form-control" rows="3" id="description"
-									placeholder="Enter description" name="description"
+								<textarea class="form-control" rows="3" 
+									 name="description"
 									th:field="*{description}"></textarea>
 								<br />
-								<p th:if="${#fields.hasErrors('description')}"
-									th:errors="*{description}" class="alert alert-danger"></p>
+					
 							</div>
 						</div>
 						<br />
@@ -68,8 +66,7 @@
 									th:text="${profession}" />
 
 							</select>
-							<p th:if="${#fields.hasErrors('profession')}" th:errors="*{profession}"
-									class="alert alert-danger"></p>
+					
 
 						</div>
 						<br />
@@ -82,18 +79,16 @@
 								<option th:each="status : ${statusList}" th:text="${status}" />
 
 							</select>
-							<p th:if="${#fields.hasErrors('status')}" th:errors="*{status}"
-									class="alert alert-danger"></p>
+					
 
 						</div>
 						<br />
 
 						<button type="submit" class="btn btn-success">
-							Save Advertisement <i class="fa fa-plus-square"
+							Update Advertisement <i class="fa fa-plus-square"
 								aria-hidden="true"></i>
 						</button>
-						<a th:href="@{/job/getAllJobs}" class="btn btn-primary">Show
-							All Advertisements</a>
+						
 					</form>
 				</div>
 				<div th:if="${message!=null}" class="card-footer bg-white text-info">

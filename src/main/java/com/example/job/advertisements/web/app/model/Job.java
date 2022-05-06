@@ -32,15 +32,15 @@ public class Job {
 	@Column(name = "description")
 	private String description;
 
-	
+	@NotEmpty(message = "You must select profession")
 	@Column(name = "profession")
 	private String profession;
 
-	
+	@NotEmpty(message = "You must select status")
 	@Column(name = "status")
 	private String status;
 
-	
+	@NotEmpty(message = "You must select location")
 	@Column(name = "location")
 	private String location;
 

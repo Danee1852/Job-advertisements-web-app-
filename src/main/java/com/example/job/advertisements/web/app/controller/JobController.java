@@ -112,6 +112,7 @@ public class JobController {
 	@GetMapping("/edit")
 	public String getEditPage(Model model, RedirectAttributes attributes, @RequestParam Long id) {
 		String page = null;
+		initModel(model);
 		try {
 			Job job = service.getJobById(id);
 			model.addAttribute("job", job);
@@ -124,8 +125,9 @@ public class JobController {
 		return page;
 	}
 
-	@PostMapping("/update")
-	public String updateJob(@ModelAttribute Job job, RedirectAttributes attributes) {
+	@PostMapping("/edit")
+	public String updateJob(@ModelAttribute Job job, Model model, RedirectAttributes attributes) {
+		initModel(model);
 		service.updateJob(job);
 		Long id = job.getId();
 		attributes.addAttribute("message", "Job advertisement with id: '" + id + "' is updated successfully !");
