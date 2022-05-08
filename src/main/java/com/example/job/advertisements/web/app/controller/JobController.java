@@ -2,6 +2,7 @@ package com.example.job.advertisements.web.app.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
@@ -24,9 +25,16 @@ import com.example.job.advertisements.web.app.service.JobService;
 @Controller
 @RequestMapping("/job")
 public class JobController {
+	
+	public static final Logger LOGGER = Logger.getLogger(JobController.class.getName());
 
-	@Autowired
-	private JobService service;
+	
+	private JobService service;	
+
+	public JobController(JobService service) {
+		LOGGER.info("JobController( " + service + ")");
+		this.service = service;
+	}
 
 	static List<String> locationsList = null;
 
@@ -83,7 +91,9 @@ public class JobController {
 
 	@PostMapping("/add")
 	public String saveJob(@ModelAttribute(name = "job") @Valid Job job, BindingResult br, Model model) {
-
+		
+		LOGGER.info("PostMapping saveJob(" + job + ")");
+		
 		initModel(model);
 		if (br.hasErrors()) {
 			return "addForm";
@@ -108,6 +118,7 @@ public class JobController {
 
 	@GetMapping("/edit")
 	public String getEditPage(Model model, RedirectAttributes attributes, @RequestParam Long id) {
+		
 		String page = null;
 		initModel(model);
 		try {
@@ -127,6 +138,9 @@ public class JobController {
 	@PostMapping("/edit/{id}")
 	public String updateJob(@PathVariable Long id, @ModelAttribute(name = "job") Job job, Model model,
 			RedirectAttributes attributes) {
+		
+		LOGGER.info("PostMapping updateJob(" + job + ", "+ id + ")");
+		
 		initModel(model);
 		// Long id = job.getId();
 		try {
@@ -144,6 +158,9 @@ public class JobController {
 
 	@GetMapping("/delete")
 	public String deleteJob(@RequestParam Long id, RedirectAttributes attributes) {
+		
+		LOGGER.info("GetMapping deleteJob(" + id + ")");
+		
 		try {
 			service.deleteJobById(id);
 			attributes.addAttribute("message", "Job with Id : '" + id + "' is removed successfully!");
