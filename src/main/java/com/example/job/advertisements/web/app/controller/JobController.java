@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,14 +61,12 @@ public class JobController {
 		statusList.add("Disabled");
 
 	}
-	
-	private void initModel(Model model)
-	{
+
+	private void initModel(Model model) {
 		model.addAttribute("locationsList", locationsList);
 		model.addAttribute("professionsList", professionsList);
 		model.addAttribute("statusList", statusList);
 	}
-
 
 	@GetMapping("/")
 	public String showHomePage() {
@@ -83,26 +82,24 @@ public class JobController {
 	}
 
 	@PostMapping("/add")
-	public String saveJob(@ModelAttribute (name="job") @Valid Job job, BindingResult br, Model model) {
-		
+	public String saveJob(@ModelAttribute(name = "job") @Valid Job job, BindingResult br, Model model) {
+
 		initModel(model);
 		if (br.hasErrors()) {
 			return "addForm";
-		} 
-		   	Long id = service.saveJob(job).getId();
-			String message = "Advertisement with id : '" + id + "' is saved successfully !";
-			model.addAttribute("message", message);
-			service.saveJob(job);
+		}
+		Long id = service.saveJob(job).getId();
+		String message = "Advertisement with id : '" + id + "' is saved successfully !";
+		model.addAttribute("message", message);
+		service.saveJob(job);
 
-			return "addForm";
-		
+		return "addForm";
 
 	}
-	
-	
 
 	@GetMapping("/getAllJobs")
 	public String getAllJobs(@RequestParam(value = "message", required = false) String message, Model model) {
+
 		List<Job> jobs = service.getAllJobs();
 		model.addAttribute("list", jobs);
 		model.addAttribute("message", message);
@@ -114,24 +111,35 @@ public class JobController {
 		String page = null;
 		initModel(model);
 		try {
+
 			Job job = service.getJobById(id);
 			model.addAttribute("job", job);
 			page = "editJobPage";
+
 		} catch (JobNotFoundException e) {
 			e.printStackTrace();
 			attributes.addAttribute("message", e.getMessage());
-			page = "redirect:getAllJobs";
+			page = "getAllJobs";
 		}
 		return page;
 	}
 
-	@PostMapping("/edit")
-	public String updateJob(@ModelAttribute Job job, Model model, RedirectAttributes attributes) {
+	@PostMapping("/edit/{id}")
+	public String updateJob(@PathVariable Long id, @ModelAttribute(name = "job") Job job, Model model,
+			RedirectAttributes attributes) {
 		initModel(model);
-		service.updateJob(job);
-		Long id = job.getId();
-		attributes.addAttribute("message", "Job advertisement with id: '" + id + "' is updated successfully !");
-		return "redirect:getAllJobs";
+		// Long id = job.getId();
+		try {
+
+			service.updateJob(id, job);
+			attributes.addAttribute("message", "Job advertisement with id: " + id + " is updated successfully !");
+			return "redirect:/job/getAllJobs";
+		} catch (JobNotFoundException e) {
+
+			e.printStackTrace();
+			return "redirect:getAllJobs";
+		}
+
 	}
 
 	@GetMapping("/delete")

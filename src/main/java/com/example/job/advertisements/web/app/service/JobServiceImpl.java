@@ -48,9 +48,23 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
-	public void updateJob(Job job) {
+	public void updateJob(Long id, Job job) throws JobNotFoundException {
 
-		repository.save(job);
+		Job dbJob = getJobById(id);
+
+		if (dbJob != null) {
+
+			dbJob.setStatus(job.getStatus());
+			dbJob.setTitle(job.getTitle());
+			dbJob.setLocation(job.getLocation());
+			dbJob.setDescription(job.getDescription());
+			dbJob.setProfession(job.getProfession());
+
+			repository.save(dbJob);
+		} else {
+			repository.save(job);
+		}
+
 	}
 
 }

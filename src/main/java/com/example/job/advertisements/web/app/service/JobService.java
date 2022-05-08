@@ -16,6 +16,6 @@ public interface JobService {
 
 	public void deleteJobById(Long id) throws JobNotFoundException;
 
-	public void updateJob(Job job);
+	public void updateJob(Long id, Job job) throws JobNotFoundException;
 
 }
