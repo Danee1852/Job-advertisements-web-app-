@@ -90,14 +90,14 @@
                            
                             <li class="page-item">
                                 <a th:if="${currentPage < totalPages}"
-                                   th:href="@{'job/getAllJobs/page/' + ${currentPage + 1}}"> Next</a>
+                                   th:href="@{'/job/getAllJobs/page/' + ${currentPage + 1}}"> Next</a>
                                 <span th:unless="${currentPage < totalPages}">  Next  </span>
                             </li>
                            
 
                             <li class="page-item">
                                 <a th:if="${currentPage < totalPages}"
-                                   th:href=" @{'job/getAllJobs/page/' + ${totalPages}} "> Last  </a>
+                                   th:href=" @{'/job/getAllJobs/page/' + ${totalPages}} "> Last  </a>
                                 <span th:unless="${currentPage < totalPages}"> Last  </span>
                             </li>
                         </ul>
