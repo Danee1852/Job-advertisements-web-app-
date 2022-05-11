@@ -64,6 +64,46 @@
 						    <a th:href="@{/job/edit(id=${ob.id})}" class="btn btn-warning">EDIT <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 					</tr>
 			</table>
+			 <footer style="font-size: large" class="panel-footer">
+                    <nav aria-label="Page navigation example">
+                        Total Advertisements [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a th:if="${currentPage > 1}" 
+                                	th:href="@{/job/getAllJobs/page/1}">First </a>
+                                <span th:unless="${currentPage > 1}">First </span>
+                            </li>
+
+                            <li class="page-item">
+                                <a th:if="${currentPage > 1}"
+                                   th:href="@{'/job/getAllJobs/page/' + ${currentPage - 1}}">  Previous </a>
+                                <span th:unless="${currentPage > 1}">  Previous </span>
+                            </li>
+
+                            <li class="page-item">
+                                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                    <a th:href="@{'/job/getAllJobs/page/' + ${i}}"> [[${i}]] </a>&nbsp; &nbsp;
+                                </span>
+                            </li>
+
+                           
+                            <li class="page-item">
+                                <a th:if="${currentPage < totalPages}"
+                                   th:href="@{'job/getAllJobs/page/' + ${currentPage + 1}}"> Next</a>
+                                <span th:unless="${currentPage < totalPages}">  Next  </span>
+                            </li>
+                           
+
+                            <li class="page-item">
+                                <a th:if="${currentPage < totalPages}"
+                                   th:href=" @{'job/getAllJobs/page/' + ${totalPages}} "> Last  </a>
+                                <span th:unless="${currentPage < totalPages}"> Last  </span>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </footer>
 			<a th:href="@{/job/add}" class="btn btn-success ">Add
 				Job <i class="fa fa-plus-square" aria-hidden="true"></i>
 			</a> <a th:href="@{/home}" class="btn btn-primary">Go Home </a>

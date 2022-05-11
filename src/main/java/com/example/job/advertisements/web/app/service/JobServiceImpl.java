@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.job.advertisements.web.app.exceptionHandler.JobNotFoundException;
@@ -22,10 +25,16 @@ public class JobServiceImpl implements JobService {
 		return repository.save(job);
 	}
 
-	@Override
-	public List<Job> getAllJobs() {
-
-		return repository.findAll();
+	/*
+	 * @Override public List<Job> getAllJobs() {
+	 * 
+	 * return repository.findAll(); }
+	 */
+	
+	public Page<Job> findPage(int pageNumber) {
+		Pageable pageable = PageRequest.of(pageNumber - 1, 5);
+		return repository.findAll(pageable);
+				
 	}
 
 	@Override
@@ -66,5 +75,6 @@ public class JobServiceImpl implements JobService {
 		}
 
 	}
+
 
 }

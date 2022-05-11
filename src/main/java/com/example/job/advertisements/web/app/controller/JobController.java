@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -107,14 +108,38 @@ public class JobController {
 
 	}
 
+	/*
+	 * @GetMapping("/getAllJobs") public String getAllJobs(@RequestParam(value =
+	 * "message", required = false) String message, Model model) {
+	 * 
+	 * List<Job> jobs = service.getAllJobs();
+	 * model.addAttribute("list", jobs);
+	 * model.addAttribute("message", message); 
+	 * return "listAllJobs"; }
+	 */
+	
 	@GetMapping("/getAllJobs")
-	public String getAllJobs(@RequestParam(value = "message", required = false) String message, Model model) {
-
-		List<Job> jobs = service.getAllJobs();
+	public String getAllPages(Model model) {
+		return getOnePage(model,1);
+	}
+	
+	@GetMapping("/getAllJobs/page/{pageNumber}")
+	public String getOnePage(Model model, @PathVariable("pageNumber") int currentPage) {
+		Page<Job> page = service.findPage(currentPage);
+		int totalPages = page.getTotalPages();
+		long totalItems = page.getTotalElements();
+		List<Job> jobs = page.getContent();
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("list", jobs);
-		model.addAttribute("message", message);
+		
+		
 		return "listAllJobs";
 	}
+	
+	
 
 	@GetMapping("/edit")
 	public String getEditPage(Model model, RedirectAttributes attributes, @RequestParam Long id) {
