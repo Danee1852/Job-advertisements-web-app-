@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -135,11 +136,30 @@ public class JobController {
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("list", jobs);
 		
-		
 		return "listAllJobs";
 	}
 	
-	
+	@GetMapping("/getAllJobs/page/{pageNumber}/{field}")
+	public String getPageWithSort(Model model, 
+			@PathVariable("pageNumber") int currentPage,
+			@PathVariable String field,
+			@PathParam("sortDir") String sortDir) {
+		
+		Page<Job> page = service.findJobsWithSort(field, sortDir, currentPage);
+		List<Job> jobs = page.getContent();
+		int totalPages = page.getTotalPages();
+		long totalItems = page.getTotalElements();
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalItems", totalItems);
+		
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+		model.addAttribute("list", jobs);
+		return "listAllJobs";
+		
+	}
 
 	@GetMapping("/edit")
 	public String getEditPage(Model model, RedirectAttributes attributes, @RequestParam Long id) {

@@ -12,7 +12,7 @@ public interface JobService {
 
 	public Job saveJob(Job job);
 
-	//public List<Job> getAllJobs();
+	public List<Job> getAllJobs();
 
 	public Job getJobById(Long id) throws JobNotFoundException;
 
@@ -21,5 +21,7 @@ public interface JobService {
 	public void updateJob(Long id, Job job) throws JobNotFoundException;
 	
 	public Page<Job> findPage(int pageNumber);
+	
+	public Page<Job> findJobsWithSort(String field, String direction, int pageNumber);
 
 }
