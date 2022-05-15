@@ -22,6 +22,6 @@ public interface JobService {
 	
 	public Page<Job> findPage(int pageNumber);
 	
-	public Page<Job> findJobsWithSort(String field, String direction, int pageNumber);
+	public Page<Job> findJobsWithSort(String field, String direction, int pageNumber, String keyword);
 
 }

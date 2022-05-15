@@ -9,6 +9,7 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,11 +28,10 @@ import com.example.job.advertisements.web.app.service.JobService;
 @Controller
 @RequestMapping("/job")
 public class JobController {
-	
+
 	public static final Logger LOGGER = Logger.getLogger(JobController.class.getName());
 
-	
-	private JobService service;	
+	private JobService service;
 
 	public JobController(JobService service) {
 		LOGGER.info("JobController( " + service + ")");
@@ -93,9 +93,9 @@ public class JobController {
 
 	@PostMapping("/add")
 	public String saveJob(@ModelAttribute(name = "job") @Valid Job job, BindingResult br, Model model) {
-		
+
 		LOGGER.info("PostMapping saveJob(" + job + ")");
-		
+
 		initModel(model);
 		if (br.hasErrors()) {
 			return "addForm";
@@ -113,57 +113,57 @@ public class JobController {
 	 * @GetMapping("/getAllJobs") public String getAllJobs(@RequestParam(value =
 	 * "message", required = false) String message, Model model) {
 	 * 
-	 * List<Job> jobs = service.getAllJobs();
-	 * model.addAttribute("list", jobs);
-	 * model.addAttribute("message", message); 
-	 * return "listAllJobs"; }
+	 * List<Job> jobs = service.getAllJobs(); model.addAttribute("list", jobs);
+	 * model.addAttribute("message", message); return "listAllJobs"; }
 	 */
-	
+
 	@GetMapping("/getAllJobs")
 	public String getAllPages(Model model) {
-		return getOnePage(model,1);
+
+		return getOnePage(model, 1);
 	}
-	
+
 	@GetMapping("/getAllJobs/page/{pageNumber}")
 	public String getOnePage(Model model, @PathVariable("pageNumber") int currentPage) {
 		Page<Job> page = service.findPage(currentPage);
 		int totalPages = page.getTotalPages();
 		long totalItems = page.getTotalElements();
 		List<Job> jobs = page.getContent();
-		
+
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalItems", totalItems);
 		model.addAttribute("list", jobs);
-		
+
 		return "listAllJobs";
 	}
-	
+
 	@GetMapping("/getAllJobs/page/{pageNumber}/{field}")
-	public String getPageWithSort(Model model, 
-			@PathVariable("pageNumber") int currentPage,
-			@PathVariable String field,
-			@PathParam("sortDir") String sortDir) {
-		
-		Page<Job> page = service.findJobsWithSort(field, sortDir, currentPage);
+	public String getPageWithSort(Model model, @PathVariable("pageNumber") int currentPage, @PathVariable String field,
+			@PathParam("sortDir") String sortDir, @Param("keyword") String keyword) {
+
+		Page<Job> page = service.findJobsWithSort(field, sortDir, currentPage, keyword);
 		List<Job> jobs = page.getContent();
 		int totalPages = page.getTotalPages();
 		long totalItems = page.getTotalElements();
-		
+
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalItems", totalItems);
-		
+
 		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 		model.addAttribute("list", jobs);
+
+		model.addAttribute("field", field);
 		return "listAllJobs";
-		
+
 	}
 
 	@GetMapping("/edit")
 	public String getEditPage(Model model, RedirectAttributes attributes, @RequestParam Long id) {
-		
+
 		String page = null;
 		initModel(model);
 		try {
@@ -183,11 +183,11 @@ public class JobController {
 	@PostMapping("/edit/{id}")
 	public String updateJob(@PathVariable Long id, @ModelAttribute(name = "job") Job job, Model model,
 			RedirectAttributes attributes) {
-		
-		LOGGER.info("PostMapping updateJob(" + job + ", "+ id + ")");
-		
+
+		LOGGER.info("PostMapping updateJob(" + job + ", " + id + ")");
+
 		initModel(model);
-		// Long id = job.getId();
+
 		try {
 
 			service.updateJob(id, job);
@@ -203,9 +203,9 @@ public class JobController {
 
 	@GetMapping("/delete")
 	public String deleteJob(@RequestParam Long id, RedirectAttributes attributes) {
-		
+
 		LOGGER.info("GetMapping deleteJob(" + id + ")");
-		
+
 		try {
 			service.deleteJobById(id);
 			attributes.addAttribute("message", "Job with Id : '" + id + "' is removed successfully!");

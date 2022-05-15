@@ -32,27 +32,45 @@
 	<br>
 	<br>
 
-<div class="container">
+	<div class="container">
 		<div class="row">
-	<div class="col-md-12">
-		
+			<div class="col-md-12">
 
-			<div class="card-header text-center text-black">
-				<h3>Job Offers</h3>
-			</div>
 
-			<table class="table table-hover table-bordered ">
-				<tr class="bg-dark text-white">
-					<th><a th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/id?sortDir=' + ${reverseSortDir}}">Id</a></th>
-					<th><a th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/title?sortDir=' + ${reverseSortDir}}">Title</a></th>
-					<th><a th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/location?sortDir=' + ${reverseSortDir}}">Location</a></th>
-					<th><a th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/description?sortDir=' + ${reverseSortDir}}">Description</a></th>
-					<th><a th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/category?sortDir=' + ${reverseSortDir}}">Category</a></th>
-					<th><a th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/publishDate?sortDir=' + ${reverseSortDir}}">Publish Date</a></th>
-					<th><a th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/status?sortDir=' + ${reverseSortDir}}">Status</a></th>
-					<th>Edit/Delete</th>
-				</tr>
-				<tr th:each="ob:${list}">
+				<div class="card-header text-center text-black">
+					<h3>Job Offers</h3>
+				</div>
+				<div>
+					<form th:action="@{/job/getAllJobs/page/1/id}">
+						<input type="hidden" name="field" th:value="${field}" /> <input
+							type="hidden" name="sortDir" th:value="${sortDir}" /> Filter: <input
+							type="text" name="keyword" th:value="${keyword}" required />
+						&nbsp; <input type="submit" value="Search" /> &nbsp; <input
+							type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+					</form>
+
+				</div>
+
+				<table class="table table-hover table-bordered ">
+					<tr class="bg-dark text-white">
+						<th><a
+							th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/id?sortDir=' + ${reverseSortDir}}">Id</a></th>
+						<th><a
+							th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/title?sortDir=' + ${reverseSortDir}}">Title</a></th>
+						<th><a
+							th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/location?sortDir=' + ${reverseSortDir}}">Location</a></th>
+						<th><a
+							th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/description?sortDir=' + ${reverseSortDir}}">Description</a></th>
+						<th><a
+							th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/category?sortDir=' + ${reverseSortDir}}">Category</a></th>
+						<th><a
+							th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/publishDate?sortDir=' + ${reverseSortDir}}">Publish
+								Date</a></th>
+						<th><a
+							th:href="@{'/job/getAllJobs/page/' + ${currentPage} + '/status?sortDir=' + ${reverseSortDir}}">Status</a></th>
+						<th>Edit/Delete</th>
+					</tr>
+					<tr th:each="ob:${list}">
 						<td th:text=${ob.id}></td>
 						<td th:text=${ob.title}></td>
 						<td th:text=${ob.location}></td>
@@ -60,59 +78,62 @@
 						<td th:text=${ob.profession}></td>
 						<td th:text=${ob.publishDate}></td>
 						<td th:text=${ob.status}></td>
-						<td><a th:href="@{/job/delete(id=${ob.id})}" class= "btn btn-danger">DELETE <i class="fa fa-trash-o" aria-hidden="true"></i></a> |
-						    <a th:href="@{/job/edit(id=${ob.id})}" class="btn btn-warning">EDIT <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+						<td><a th:href="@{/job/delete(id=${ob.id})}"
+							class="btn btn-danger">DELETE <i class="fa fa-trash-o"
+								aria-hidden="true"></i></a> | <a th:href="@{/job/edit(id=${ob.id})}"
+							class="btn btn-warning">EDIT <i class="fa fa-pencil-square-o"
+								aria-hidden="true"></i></a></td>
 					</tr>
-			</table>
-			 <footer style="font-size: large" class="panel-footer">
-                    <nav aria-label="Page navigation example">
-                        Total Advertisements [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+				</table>
+				<footer style="font-size: large" class="panel-footer">
+					<nav aria-label="Page navigation example">
+						Total Advertisements [[${totalItems}]] : Page [[${currentPage}]]
+						of [[${totalPages}]]
 
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a th:if="${currentPage > 1}" 
-                                	th:href="@{/job/getAllJobs/page/1}">First </a>
-                                <span th:unless="${currentPage > 1}">First </span>
-                            </li>
+						<ul class="pagination">
+							<li class="page-item"><a th:if="${currentPage > 1}"
+								th:href="@{/job/getAllJobs/page/1}">First </a> <span
+								th:unless="${currentPage > 1}">First </span></li>
 
-                            <li class="page-item">
-                                <a th:if="${currentPage > 1}"
-                                   th:href="@{'/job/getAllJobs/page/' + ${currentPage - 1}}">  Previous </a>
-                                <span th:unless="${currentPage > 1}">  Previous </span>
-                            </li>
+							<li class="page-item"><a th:if="${currentPage > 1}"
+								th:href="@{'/job/getAllJobs/page/' + ${currentPage - 1}}">
+									Previous </a> <span th:unless="${currentPage > 1}"> Previous
+							</span></li>
 
-                            <li class="page-item">
-                                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                                    <a th:href="@{'/job/getAllJobs/page/' + ${i}}"> [[${i}]] </a>&nbsp; &nbsp;
-                                </span>
-                            </li>
+							<li class="page-item"><span
+								th:each="i: ${#numbers.sequence(1, totalPages)}"> <a
+									th:href="@{'/job/getAllJobs/page/' + ${i}}"> [[${i}]] </a>&nbsp;
+									&nbsp;
+							</span></li>
 
-                           
-                            <li class="page-item">
-                                <a th:if="${currentPage < totalPages}"
-                                   th:href="@{'/job/getAllJobs/page/' + ${currentPage + 1}}"> Next</a>
-                                <span th:unless="${currentPage < totalPages}">  Next  </span>
-                            </li>
-                           
 
-                            <li class="page-item">
-                                <a th:if="${currentPage < totalPages}"
-                                   th:href=" @{'/job/getAllJobs/page/' + ${totalPages}} "> Last  </a>
-                                <span th:unless="${currentPage < totalPages}"> Last  </span>
-                            </li>
-                        </ul>
-                    </nav>
+							<li class="page-item"><a th:if="${currentPage < totalPages}"
+								th:href="@{'/job/getAllJobs/page/' + ${currentPage + 1}}">
+									Next</a> <span th:unless="${currentPage < totalPages}"> Next
+							</span></li>
 
-                </footer>
-			<a th:href="@{/job/add}" class="btn btn-success ">Add
-				Job <i class="fa fa-plus-square" aria-hidden="true"></i>
-			</a> <a th:href="@{/home}" class="btn btn-primary">Go Home </a>
+
+							<li class="page-item"><a th:if="${currentPage < totalPages}"
+								th:href=" @{'/job/getAllJobs/page/' + ${totalPages}} "> Last
+							</a> <span th:unless="${currentPage < totalPages}"> Last </span></li>
+						</ul>
+					</nav>
+
+				</footer>
+				<a th:href="@{/job/add}" class="btn btn-success ">Add Job <i
+					class="fa fa-plus-square" aria-hidden="true"></i>
+				</a> <a th:href="@{/home}" class="btn btn-primary">Go Home </a>
+			</div>
+			<div class="card-footer bg-white text-success"
+				th:if="${message!=null}">
+				<span th:text="${message}"></span>
+			</div>
 		</div>
-		<div class="card-footer bg-white text-success"
-			th:if="${message!=null}">
-			<span th:text="${message}"></span>
-		</div>
-</div></div>
-
+	</div>
+	<script type="text/javascript">
+		function clearSearch() {
+			window.location = "[[@{/job/getAllJobs}]]";
+		}
+	</script>
 </body>
 </html>

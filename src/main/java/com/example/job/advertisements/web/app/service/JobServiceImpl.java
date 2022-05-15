@@ -26,28 +26,34 @@ public class JobServiceImpl implements JobService {
 		return repository.save(job);
 	}
 
-	
-	  @Override public List<Job> getAllJobs() {
-	  
-	  return repository.findAll(); }
-	 
-	
+	@Override
+	public List<Job> getAllJobs() {
+
+		return repository.findAll();
+	}
+
+	@Override
 	public Page<Job> findPage(int pageNumber) {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 5);
-		
-		return repository.findAll(pageable);
-				
-	}
-	
-	public Page<Job> findJobsWithSort(String field, String direction, int pageNumber) {
-		Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name())?
-				Sort.by(field).ascending(): Sort.by(field).descending();
-		Pageable pageable = PageRequest.of(pageNumber - 1, 5,sort);
 
 		return repository.findAll(pageable);
+
 	}
-	
-	
+
+	@Override
+	public Page<Job> findJobsWithSort(String field, String direction, int pageNumber, String keyword) {
+		Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(field).ascending()
+				: Sort.by(field).descending();
+		Pageable pageable = PageRequest.of(pageNumber - 1, 5, sort);
+
+		if (keyword != null) {
+			return repository.findJobByKeyword(keyword, pageable);
+
+		} else {
+
+			return repository.findAll(pageable);
+		}
+	}
 
 	@Override
 	public Job getJobById(Long id) throws JobNotFoundException {
@@ -87,6 +93,5 @@ public class JobServiceImpl implements JobService {
 		}
 
 	}
-
 
 }
