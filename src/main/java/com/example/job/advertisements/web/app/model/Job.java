@@ -52,7 +52,7 @@ public class Job {
 	public Job() {
 
 	}
-	// ,
+	
 
 	public Job(String title, String description, String location, String profession, String status,
 			Date publishDate) {

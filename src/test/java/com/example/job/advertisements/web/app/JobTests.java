@@ -29,33 +29,16 @@ public class JobTests {
 
 
 
-	@Test
-    void addjobShouldReturnJobInstance() {
-        //given
-        Job job = new Job();
-        job.setTitle("Title");
-        job.setDescription("Description");
-        //when
-        Job savedJob = jobService.saveJob(job);
-        //then
-        assertAll(
-                () -> assertNotNull(savedJob),
-                () -> assertInstanceOf(Job.class, savedJob)
-        );
-    }
-	
-	@Test
-    void addJobShouldAutoIncrementId() {
-        //given
-        Job job = new Job();
-        job.setTitle("Title");
-        job.setDescription("Description");
-        //when
-        Job savedJob = jobService.saveJob(job);
-        //then
-        assertNotNull(savedJob.getId());
-    }
-
+	/*
+	 * @Test void addjobShouldReturnJobInstance() { //given Job job = new Job();
+	 * job.setTitle("Title"); job.setDescription("Description"); //when Job savedJob
+	 * = jobService.saveJob(job); //then assertAll( () -> assertNotNull(savedJob),
+	 * () -> assertInstanceOf(Job.class, savedJob) ); }
+	 * 
+	 * @Test void addJobShouldAutoIncrementId() { //given Job job = new Job();
+	 * job.setTitle("Title"); job.setDescription("Description"); //when Job savedJob
+	 * = jobService.saveJob(job); //then assertNotNull(savedJob.getId()); }
+	 */
 
 
 }
